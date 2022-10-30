@@ -1,0 +1,85 @@
+Name:Andrew Thompson
+Section:Lecture 2
+
+Do not remove the questions from this file.
+Please write and indent your answers in this file.
+
+For all cache simulations, use a capacity of 16384 bytes, and set associativity of 1, for both 
+the I-cache and the D-cache.
+
+Sample command line:
+pin-fw/pin -injection child -t pin-fw/source/tools/Memory/obj-ia32/allcache.so -is 16384 -ia 1 -ib 64 -ds 16384 -da 1 -db <block-size> -- <yourexe>
+
+-------
+cache1D
+-------
+
+1.1 What do you get from running pin with a block size of 4 bytes?
+
+	Data cache misses:	109476
+	Data cache references:	643097
+
+1.2 Calculate the hit ratio for the D-cache with a block size of 4 bytes?
+				533621/643097 = 82.98%
+
+2.1 What do you get from running pin with a block size of 32 bytes?
+
+	Data cache misses:	14899
+	Data cache references:	643097
+
+2.2 Calculate the hit ratio for the D-cache with a block size of 32 bytes?
+				628198/643097 = 97.68%
+
+3.1 What do you get from running pin with a block size of 64 bytes?
+
+	Data cache misses: 	8795
+	Data cache references:	643097 
+
+3.2 Calculate the hit ratio for the D-cache with a block size of 64 bytes?
+				634302/643097 = 98.62%
+
+4. For this question, assume that the 100,000 element integer array that you allocated starts at address 0x50000000 in memory, the size of an integer is 4 bytes and the D-cache is initially empty. As you read the integers in the array one-by-one, starting at index 0, how many D-cache misses will you see for reading the first 40 integers when the cache block size is (to be answered without running pin):
+
+a) 4 bytes:
+	6 cache misses
+b) 32 bytes:
+	1 cache miss
+c) 64 bytes:
+	0 cache misses
+
+5. For this program, which block size is best? Why? What is the relationship between the blocksize and hit ratio? Why?
+	The best block size is 64 bytes, this is because this is what the OS that we are running the program on uses. The relationship between block-size and hit ratio is, that when you get closer to the byte size of your OS your hit ratio increases so as you get further away from it your hit ratio would decrease. This is because when running the program on a 64 byte machine using that block-size better suits the cache that is on the machine. 
+-----------
+cache2Drows
+-----------
+
+6.1 What do you get from running pin with a block size of 64 bytes?
+
+	Data cache misses: 	107410
+	Data cache references:	12058098
+
+6.2 Calculate the hit ratio for the D-cache with a block size of 64 bytes?
+				11950688/12058098 = 99.11% hit rate
+-----------
+cache2Dcols
+-----------
+
+7.1 What do you get from running pin with a block size of 64 bytes?
+	
+	Data cache misses:	1507773
+	Data cache references:	12045598
+
+7.2 Calculate the hit ratio for the D-cache with a block size of 64 bytes?
+				10537825/12045598 = 87.48% hit rate
+--------------------------------------
+Comparing cache2Drows with cache2Dcols
+--------------------------------------
+
+8. For this question, assume that the 2-D integer array you allocated starts at address 0x40000000 in memory, the size of an integer is 4 bytes, D-cache block size is 64 bytes and the D-cache is initially empty. As you read the integers in the 2-D array one-by-one, starting with element array[0,0], how many D-cache misses will you see for reading the first 10 integers in case of (to be answered without running pin):
+
+a) cache2Drows:	0 misses
+
+b) cache2Dcols:	2 misses
+
+9. Compare the performance (hit ratio) of the D-cache for the 2 programs. Briefly explain what you observe.
+	The hit ratio of the rows performance is near perfect with a .89% miss rate where as the miss rate of the col way is close to ~23% This might be because the rows keeps the same row for the entire filling of it, where as the col switches to a different row every fill. 
